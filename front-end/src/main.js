@@ -2,7 +2,7 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
 import LoginPage from "./components/LoginPage/LoginPage.vue";
-import CreateAccount from "./components/CreateAccount.vue";
+import CreateAccount from "./components/CreateAccount/CreateAccount.vue";
 
 const routes = [
     { path: "/", component: LoginPage },
