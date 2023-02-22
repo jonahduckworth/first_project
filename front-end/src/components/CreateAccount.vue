@@ -1,10 +1,14 @@
 <template>
     <div>
-        <h1>Login</h1>
+        <h1>Create an Account</h1>
         <form>
             <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" v-model="username" />
+                <label for="name">Name:</label>
+                <input type="text" id="name" v-model="name" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="email" />
             </div>
             <div>
                 <label for="password">Password:</label>
@@ -12,25 +16,20 @@
             </div>
             <button @click.prevent="submit">Submit</button>
         </form>
-        <p>
-            Don't have an account yet?
-            <router-link to="/create-account">Create one</router-link>.
-        </p>
     </div>
 </template>
 <script>
 export default {
     data() {
         return {
-            username: "",
+            name: "",
+            email: "",
             password: "",
         };
     },
     methods: {
         submit() {
-            // Add your authentication logic here
-            // If authentication is successful, navigate to the dashboard
-            this.$router.push("/dashboard");
+            // Add your code to submit the form data to your back end here
         },
     },
 };
