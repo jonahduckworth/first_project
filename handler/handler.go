@@ -10,22 +10,26 @@ import (
 )
 
 func CreateUser(db *sql.DB) echo.HandlerFunc {
-	return func(c echo.Context) error {
-		u := new(model.User)
-		if err := c.Bind(u); err != nil {
-			return err
-		}
-		result, err := db.Exec("INSERT INTO users (name, email) VALUES (?, ?)", u.Name, u.Email)
-		if err != nil {
-			return err
-		}
-		id, err := result.LastInsertId()
-		if err != nil {
-			return err
-		}
-		u.ID = int(id)
-		return c.JSON(http.StatusCreated, u)
-	}
+  return func(c echo.Context) error {
+    u := new(model.User)
+    if err := c.Bind(u); err != nil {
+      return err
+    }
+
+    // Insert a new user into the database
+    result, err := db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", u.Name, u.Email, u.Password)
+    if err != nil {
+      return err
+    }
+
+    id, err := result.LastInsertId()
+    if err != nil {
+      return err
+    }
+
+    u.ID = int(id)
+    return c.JSON(http.StatusCreated, u)
+  }
 }
 
 func GetUser(db *sql.DB) echo.HandlerFunc {

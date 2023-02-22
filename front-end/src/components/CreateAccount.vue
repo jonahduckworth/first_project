@@ -19,6 +19,12 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:8081",
+});
+
 export default {
     data() {
         return {
@@ -29,7 +35,18 @@ export default {
     },
     methods: {
         submit() {
-            // Add your code to submit the form data to your back end here
+            axiosInstance
+                .post("/users", {
+                    name: this.name,
+                    email: this.email,
+                    password: this.password,
+                })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
 };
