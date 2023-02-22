@@ -3,8 +3,8 @@
         <h1>Login</h1>
         <form>
             <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" v-model="username" />
+                <label for="email">Email:</label>
+                <input type="email" id="email" v-model="email" />
             </div>
             <div>
                 <label for="password">Password:</label>
@@ -19,18 +19,32 @@
     </div>
 </template>
 <script>
+import axios from "axios";
+
+const axiosInstance = axios.create({
+    baseURL: "http://localhost:8081",
+});
+
 export default {
     data() {
         return {
-            username: "",
+            email: "",
             password: "",
         };
     },
     methods: {
         submit() {
-            // Add your authentication logic here
-            // If authentication is successful, navigate to the dashboard
-            this.$router.push("/dashboard");
+            axiosInstance
+                .post("/login", {
+                    email: this.email,
+                    password: this.password,
+                })
+                .then((response) => {
+                    console.log(response.data);
+                })
+                .catch((error) => {
+                    console.log(error);
+                });
         },
     },
 };

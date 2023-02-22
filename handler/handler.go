@@ -16,7 +16,6 @@ func CreateUser(db *sql.DB) echo.HandlerFunc {
       return err
     }
 
-    // Insert a new user into the database
     result, err := db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", u.Name, u.Email, u.Password)
     if err != nil {
       return err
@@ -69,3 +68,35 @@ func DeleteUser(db *sql.DB) echo.HandlerFunc {
 		return c.NoContent(http.StatusNoContent)
 	}
 }
+
+func Login(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+	  type Request struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	  }
+  
+	  var req Request
+	  if err := c.Bind(&req); err != nil {
+		return err
+	  }
+  
+	  email := req.Email
+	  password := req.Password
+  
+	  // Query the database to check if the user exists
+	  var id int
+	  err := db.QueryRow("SELECT id FROM users WHERE email = ? AND password = ?", email, password).Scan(&id)
+	  if err == sql.ErrNoRows {
+		// If the user doesn't exist, return an error
+		return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid email or password"})
+	  } else if err != nil {
+		// If there's another error, return an internal server error
+		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to log in"})
+	  }
+  
+	  // If the user exists, return success with the user's id
+	  return c.JSON(http.StatusOK, map[string]int{"id": id})
+	}
+  }
+  
