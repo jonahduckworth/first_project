@@ -30,37 +30,15 @@
         </p>
     </div>
 </template>
-<style scoped>
-@import "../css/LoginPage.css";
-</style>
-<script>
-import axios from "axios";
 
-const axiosInstance = axios.create({
-    baseURL: "http://localhost:8081",
-});
+<style scoped>
+@import "./LoginPage.css";
+</style>
+
+<script>
+import loginPage from "./LoginPage.js";
 
 export default {
-    data() {
-        return {
-            email: "",
-            password: "",
-        };
-    },
-    methods: {
-        submit() {
-            axiosInstance
-                .post("/login", {
-                    email: this.email,
-                    password: this.password,
-                })
-                .then((response) => {
-                    console.log(response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        },
-    },
+    mixins: [loginPage],
 };
 </script>
