@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="create-account-text">Create Account</div>
-        <div class="shadow-container"></div>
+        <div class="container-shadow"></div>
         <div class="form-container">
             <form>
                 <div class="form-group">

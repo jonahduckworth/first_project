@@ -1,34 +1,83 @@
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+body {
+    font-family: "Press Start 2P", cursive;
+    background-color: #7cf4d3;
+    font-size: small;
+}
+
+.login-text {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .form-container {
-    width: 400px;
+    width: 355px;
+    height: 217px;
     margin: 0 auto;
-    padding: 40px;
-    background-color: #f7f7f7;
-    border-radius: 10px;
+    padding: 30px;
+    background-color: white;
+    border-radius: 0;
+    border: 1px solid black;
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+}
+
+.container-shadow {
+    width: 416px;
+    height: 277px;
+    background-color: black;
+    position: absolute;
+    top: calc(50% - 125px);
+    left: calc(50% - 194px);
 }
 
 .form-group {
     margin-bottom: 25px;
 }
 
+.form-group input {
+    width: 200px;
+    padding: 10px;
+    font-size: 10px;
+    border-radius: 0;
+    border: 1px solid;
+    appearance: none;
+    font-family: "Press Start 2P", cursive;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: initial;
+}
+
+.form-group label {
+    display: inline-block;
+    text-align: right;
+    width: 120px;
+    padding-right: 10px;
+}
+
 .form-control {
     width: 100%;
     padding: 10px;
     font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
+    border-radius: 0;
+    border: 1px solid white;
 }
 
 .btn {
     width: 100%;
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
+    font-size: small;
+    font-family: "Press Start 2P", cursive;
+    border-radius: 0;
+    background-color: black;
+    color: white;
     border: 0;
     cursor: pointer;
 }
