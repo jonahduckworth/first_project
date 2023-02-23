@@ -6,6 +6,15 @@ body {
     font-size: small;
 }
 
+.create-account-text {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    color: black;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 .form-container {
     width: 355px;
     margin: 0 auto;
@@ -16,7 +25,6 @@ body {
     position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
 }
 
 .shadow-container {
@@ -59,7 +67,7 @@ body {
     padding: 10px;
     font-size: 16px;
     border-radius: 0;
-    border: 1px solid #ccc;
+    border: 1px solid white;
 }
 
 .btn {
