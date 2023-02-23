@@ -1,6 +1,5 @@
 <template>
     <div>
-        <div class="create-account-text">Create Account</div>
         <div class="container-shadow"></div>
         <div class="form-container">
             <form>
@@ -34,7 +33,7 @@
                 <button
                     @click.prevent="submit"
                     class="btn btn-primary"
-                    @click="goToLoginPage"
+                    @click="goToRoot"
                 >
                     Create
                 </button>
@@ -42,19 +41,18 @@
         </div>
     </div>
 </template>
-
 <style scoped>
 @import "./CreateAccount.css";
 </style>
-
 <script>
 import createAccount from "./CreateAccount.js";
 
 export default {
     mixins: [createAccount],
     methods: {
-        goToLoginPage() {
-            this.$router.push({ path: "/login" });
+        goToRoot() {
+            this.$emit("update:showCreateAccountForm", false);
+            this.$emit("update:showLoginForm", true);
         },
     },
 };
