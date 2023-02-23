@@ -1,10 +1,9 @@
 <template>
     <div class="shadow-container"></div>
     <div class="form-container">
-        <h1>Create an Account</h1>
         <form>
             <div class="form-group">
-                <label for="name">Name:</label>
+                <label for="name"> Name:</label>
                 <input
                     type="text"
                     id="name"
@@ -13,7 +12,7 @@
                 />
             </div>
             <div class="form-group">
-                <label for="email">Email:</label>
+                <label for="email"> Email:</label>
                 <input
                     type="email"
                     id="email"
@@ -31,7 +30,7 @@
                 />
             </div>
             <button @click.prevent="submit" class="btn btn-primary">
-                Submit
+                Create
             </button>
         </form>
     </div>
