@@ -36,9 +36,9 @@
 </style>
 
 <script>
-import loginPage from "./LoginPage.js";
+import login from "./Login.js";
 
 export default {
-    mixins: [loginPage],
+    mixins: [login],
 };
 </script>
