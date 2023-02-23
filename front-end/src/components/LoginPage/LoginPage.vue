@@ -26,10 +26,6 @@
                     Login
                 </button>
             </form>
-            <p>
-                Don't have an account yet?
-                <router-link to="/create-account">Create one</router-link>.
-            </p>
         </div>
     </div>
 </template>
