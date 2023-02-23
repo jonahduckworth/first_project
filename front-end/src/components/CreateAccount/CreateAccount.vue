@@ -31,7 +31,11 @@
                         class="form-control"
                     />
                 </div>
-                <button @click.prevent="submit" class="btn btn-primary">
+                <button
+                    @click.prevent="submit"
+                    class="btn btn-primary"
+                    @click="goToLoginPage"
+                >
                     Create
                 </button>
             </form>
@@ -48,5 +52,10 @@ import createAccount from "./CreateAccount.js";
 
 export default {
     mixins: [createAccount],
+    methods: {
+        goToLoginPage() {
+            this.$router.push({ path: "/login" });
+        },
+    },
 };
 </script>
