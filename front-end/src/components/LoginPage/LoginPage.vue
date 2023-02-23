@@ -2,7 +2,7 @@
     <div>
         <div class="container-shadow"></div>
         <div class="form-container">
-            <div style="height: 28px; background-color: white"></div>
+            <div style="height: 25px; background-color: white"></div>
             <form>
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -22,6 +22,7 @@
                         class="form-control"
                     />
                 </div>
+                <div style="height: 20px; background-color: white"></div>
                 <button @click.prevent="submit" class="btn btn-primary">
                     Login
                 </button>
