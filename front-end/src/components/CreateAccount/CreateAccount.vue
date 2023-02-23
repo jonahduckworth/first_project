@@ -1,4 +1,5 @@
 <template>
+    <div class="shadow-container"></div>
     <div class="form-container">
         <h1>Create an Account</h1>
         <form>
