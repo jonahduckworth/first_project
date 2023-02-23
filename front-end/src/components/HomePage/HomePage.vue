@@ -2,15 +2,14 @@
     <div>
         <div class="container-shadow"></div>
         <div class="form-container">
-            <div class="login-create-account">
-                <button class="btn btn-primary" @click="goToLoginPage">
-                    Login
-                </button>
-                <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <button class="btn btn-primary" @click="goToCreateAccountPage">
-                    Create Account
-                </button>
-            </div>
+            <div style="height: 45px; background-color: white"></div>
+            <button class="btn btn-primary" @click="goToLoginPage">
+                Login
+            </button>
+            <div style="height: 40px; background-color: white"></div>
+            <button class="btn btn-primary" @click="goToCreateAccountPage">
+                Create Account
+            </button>
         </div>
     </div>
 </template>

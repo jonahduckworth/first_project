@@ -3,6 +3,7 @@
         <div class="login-text">Login</div>
         <div class="container-shadow"></div>
         <div class="form-container">
+            <div style="height: 28px; background-color: white"></div>
             <form>
                 <div class="form-group">
                     <label for="email">Email:</label>
