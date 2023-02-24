@@ -20,9 +20,9 @@ export default {
                     email: this.email,
                     password: this.password,
                 })
-                .then((response) => {
-                    console.log(response.data);
-                })
+                // .then((response) => {
+                //     // console.log(response.data);
+                // })
                 .catch((error) => {
                     console.log(error);
                 });

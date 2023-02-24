@@ -23,7 +23,7 @@
                     />
                 </div>
                 <div style="height: 20px; background-color: white"></div>
-                <button @click.prevent="submit" class="btn btn-primary">
+                <button @click.prevent="handleSubmit" class="btn btn-primary">
                     Login
                 </button>
             </form>
@@ -40,5 +40,13 @@ import login from "./Login.js";
 
 export default {
     mixins: [login],
+    methods: {
+        async handleSubmit() {
+            const response = await this.submit();
+            if (response.data.userExists) {
+                this.$router.push({ path: "/dashboard" });
+            }
+        },
+    },
 };
 </script>

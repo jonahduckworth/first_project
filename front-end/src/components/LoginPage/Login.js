@@ -13,13 +13,14 @@ export default {
     },
     methods: {
         submit() {
-            axiosInstance
+            return axiosInstance
                 .post("/login", {
                     email: this.email,
                     password: this.password,
                 })
                 .then((response) => {
                     console.log(response.data);
+                    return response;
                 })
                 .catch((error) => {
                     console.log(error);
