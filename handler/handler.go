@@ -96,7 +96,7 @@ func Login(db *sql.DB) echo.HandlerFunc {
 	  }
   
 	  // If the user exists, return success with the user's id
-	  return c.JSON(http.StatusOK, map[string]int{"id": id})
+	  return c.JSON(http.StatusOK, map[string]bool{"userExists": true})
 	}
   }
   
