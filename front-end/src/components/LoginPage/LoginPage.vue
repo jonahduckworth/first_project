@@ -29,6 +29,9 @@
                     <div class="invalid-feedback" v-if="passwordError">
                         Please enter your password.
                     </div>
+                    <div class="invalid-feedback" v-if="loginError">
+                        Invalid email or password.
+                    </div>
                 </div>
                 <div style="height: 20px; background-color: white"></div>
                 <button @click.prevent="handleSubmit" class="btn btn-primary">
@@ -62,12 +65,14 @@ export default {
         return {
             emailError: false,
             passwordError: false,
+            loginError: false,
         };
     },
     methods: {
         async handleSubmit() {
             this.emailError = false;
             this.passwordError = false;
+            this.loginError = false;
             if (!this.email) {
                 this.emailError = true;
             }
@@ -80,6 +85,9 @@ export default {
             const response = await this.submit();
             if (response.data.userExists) {
                 this.$router.push({ path: "/dashboard" });
+            }
+            if (response.data.error) {
+                this.loginError = true;
             }
         },
     },
