@@ -27,7 +27,7 @@ func CreateUser(db *sql.DB) echo.HandlerFunc {
     }
 
     u.ID = int(id)
-    return c.JSON(http.StatusCreated, u)
+	return c.JSON(http.StatusOK, map[string]bool{"userCreated": true})
   }
 }
 
