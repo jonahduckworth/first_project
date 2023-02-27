@@ -14,7 +14,7 @@
                         :class="{ 'is-invalid': emailError }"
                     />
                     <div class="invalid-feedback" v-if="emailError">
-                        Please enter your email.
+                        Please enter email.
                     </div>
                 </div>
                 <div class="form-group">
@@ -27,7 +27,7 @@
                         :class="{ 'is-invalid': passwordError }"
                     />
                     <div class="invalid-feedback" v-if="passwordError">
-                        Please enter your password.
+                        Please enter password.
                     </div>
                     <div class="invalid-feedback" v-if="loginError">
                         Invalid email or password.
@@ -44,16 +44,6 @@
 
 <style scoped>
 @import "./LoginPage.css";
-
-.is-invalid {
-    border-color: red;
-}
-
-.invalid-feedback {
-    color: red;
-    font-size: 10px;
-    margin-top: 5px;
-}
 </style>
 
 <script>
