@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div class="container-shadow"></div>
-        <div class="form-container">
-            <div style="height: 25px; background-color: white"></div>
+        <div class="login-container-shadow"></div>
+        <div class="login-form-container">
+            <div style="height: 15px; background-color: white"></div>
             <form>
                 <div class="form-group">
                     <label for="email">Email:</label>
@@ -15,6 +15,11 @@
                             'is-invalid': emailError,
                         }"
                     />
+                    <div
+                        class="invalid-feedback"
+                        v-if="!emailError"
+                        style="height: 10px; background-color: white"
+                    ></div>
                     <div class="invalid-feedback" v-if="emailError">
                         Please enter a valid email address
                     </div>
@@ -31,6 +36,11 @@
                     <div class="invalid-feedback" v-if="passwordError">
                         Please enter password
                     </div>
+                    <div
+                        class="invalid-feedback"
+                        v-if="!loginError && !passwordError"
+                        style="height: 10px; background-color: white"
+                    ></div>
                     <div class="invalid-feedback" v-if="loginError">
                         Invalid email or password
                     </div>

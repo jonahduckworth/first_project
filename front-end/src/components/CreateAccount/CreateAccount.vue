@@ -1,7 +1,8 @@
 <template>
     <div>
-        <div class="container-shadow"></div>
-        <div class="form-container">
+        <div class="create-account-container-shadow"></div>
+        <div class="create-account-form-container">
+            <div style="height: 13px; background-color: white"></div>
             <form>
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -12,6 +13,11 @@
                         class="form-control"
                         :class="{ 'is-invalid': nameError }"
                     />
+                    <div
+                        class="invalid-feedback"
+                        v-if="!nameError"
+                        style="height: 10px; background-color: white"
+                    ></div>
                     <div class="invalid-feedback" v-if="nameError">
                         Please enter your name
                     </div>
@@ -27,6 +33,11 @@
                             'is-invalid': emailError,
                         }"
                     />
+                    <div
+                        class="invalid-feedback"
+                        v-if="!emailError"
+                        style="height: 10px; background-color: white"
+                    ></div>
                     <div class="invalid-feedback" v-if="emailError">
                         Please enter a valid email address
                     </div>
@@ -40,10 +51,16 @@
                         class="form-control"
                         :class="{ 'is-invalid': passwordError }"
                     />
+                    <div
+                        class="invalid-feedback"
+                        v-if="!passwordError"
+                        style="height: 10px; background-color: white"
+                    ></div>
                     <div class="invalid-feedback" v-if="passwordError">
                         Please enter a password
                     </div>
                 </div>
+                <div style="height: 20px; background-color: white"></div>
                 <button
                     @click.prevent="handleSubmit"
                     class="btn btn-primary"

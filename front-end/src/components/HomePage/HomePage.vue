@@ -7,14 +7,14 @@
         >
             &lt; Back
         </div>
-        <div class="container-shadow"></div>
-        <div class="form-container">
+        <div class="home-container-shadow"></div>
+        <div class="home-container">
+            <div style="height: 15px; background-color: white"></div>
             <div class="login-create-account">
-                <div style="height: 45px; background-color: white"></div>
                 <button class="btn btn-primary" @click="showLoginForm = true">
                     Login
                 </button>
-                <div style="height: 40px; background-color: white"></div>
+                <div style="height: 30px; background-color: white"></div>
                 <button
                     class="btn btn-primary"
                     @click="showCreateAccountForm = true"
@@ -36,6 +36,9 @@
         </div>
     </div>
 </template>
+<style scoped>
+@import "./HomePage.css";
+</style>
 <script>
 import LoginForm from "@/components/LoginPage/LoginPage.vue";
 import CreateAccountForm from "@/components/CreateAccount/CreateAccount.vue";

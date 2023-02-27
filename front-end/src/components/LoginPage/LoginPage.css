@@ -1,8 +1,8 @@
 @import "@/css/CommonStyles.css";
 
-.form-container {
+.login-form-container {
     width: 355px;
-    height: 217px;
+    height: 230px;
     margin: 0 auto;
     padding: 30px;
     background-color: white;
@@ -11,13 +11,14 @@
     position: absolute;
     top: 50%;
     left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.container-shadow {
-    width: 416px;
-    height: 277px;
+.login-container-shadow {
+    width: 414px;
+    height: 293px;
     background-color: black;
     position: absolute;
-    top: calc(50% - 125px);
-    left: calc(50% - 194px);
+    top: calc(50% - 130px);
+    left: calc(50% - 190px);
 }
