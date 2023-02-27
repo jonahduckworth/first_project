@@ -11,10 +11,15 @@
                         id="email"
                         v-model="email"
                         class="form-control"
-                        :class="{ 'is-invalid': emailError }"
+                        :class="{
+                            'is-invalid': emailError || emailFormatError,
+                        }"
                     />
                     <div class="invalid-feedback" v-if="emailError">
                         Please enter email.
+                    </div>
+                    <div class="invalid-feedback" v-if="emailFormatError">
+                        Please enter a valid email address.
                     </div>
                 </div>
                 <div class="form-group">
@@ -53,9 +58,12 @@ export default {
     mixins: [login],
     data() {
         return {
+            email: "",
+            password: "",
             emailError: false,
             passwordError: false,
             loginError: false,
+            emailFormatError: false,
         };
     },
     methods: {
@@ -63,22 +71,28 @@ export default {
             this.emailError = false;
             this.passwordError = false;
             this.loginError = false;
+            this.emailFormatError = !this.validateEmail(this.email);
             if (!this.email) {
                 this.emailError = true;
             }
             if (!this.password) {
                 this.passwordError = true;
             }
-            if (!this.email || !this.password) {
+            if (!this.email || !this.password || this.emailFormatError) {
                 return;
             }
             const response = await this.submit();
             if (response.data.userExists) {
                 this.$router.push({ path: "/dashboard" });
-            }
-            if (response.data.error) {
+            } else {
                 this.loginError = true;
             }
+        },
+        validateEmail(email) {
+            // Source: https://stackoverflow.com/a/46181/1420960
+            const emailRegex =
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return emailRegex.test(String(email).toLowerCase());
         },
     },
 };
