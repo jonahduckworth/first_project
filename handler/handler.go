@@ -99,4 +99,39 @@ func Login(db *sql.DB) echo.HandlerFunc {
 	  return c.JSON(http.StatusOK, map[string]bool{"userExists": true})
 	}
   }
-  
+
+func UpdatePassword(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		type Request struct {
+			Email    string `json:"email"`
+			Password string `json:"password"`
+		}
+
+		var req Request
+		if err := c.Bind(&req); err != nil {
+			return err	
+		}
+
+		email := req.Email
+		password := req.Password
+
+		// Query the database to check if the user exists
+		var id int
+		err := db.QueryRow("SELECT id FROM users WHERE email = ?", email).Scan(&id)
+		if err == sql.ErrNoRows {
+			// If the user doesn't exist, return an error
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Invalid email"})
+		} else if err != nil {
+			// If there's another error, return an internal server error
+			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to reset password"})
+		}
+
+		// If the user exists, change the password
+		_, err = db.Exec("UPDATE users SET password = ? WHERE email = ?", password, email)
+		if err != nil {
+			return err
+		} else {
+			return c.JSON(http.StatusOK, map[string]bool{"passwordUpdated": true})
+		}
+	}
+}
