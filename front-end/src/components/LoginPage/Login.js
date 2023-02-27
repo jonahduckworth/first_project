@@ -19,11 +19,9 @@ export default {
                     password: this.password,
                 })
                 .then((response) => {
-                    console.log(response.data);
                     return response;
                 })
                 .catch((error) => {
-                    console.log(error);
                     return error.response;
                 });
         },
