@@ -12,14 +12,11 @@
                         v-model="email"
                         class="form-control"
                         :class="{
-                            'is-invalid': emailError || emailFormatError,
+                            'is-invalid': emailError,
                         }"
                     />
                     <div class="invalid-feedback" v-if="emailError">
-                        Please enter email.
-                    </div>
-                    <div class="invalid-feedback" v-if="emailFormatError">
-                        Please enter a valid email address.
+                        Please enter a valid email address
                     </div>
                 </div>
                 <div class="form-group">
@@ -32,10 +29,10 @@
                         :class="{ 'is-invalid': passwordError }"
                     />
                     <div class="invalid-feedback" v-if="passwordError">
-                        Please enter password.
+                        Please enter password
                     </div>
                     <div class="invalid-feedback" v-if="loginError">
-                        Invalid email or password.
+                        Invalid email or password
                     </div>
                 </div>
                 <div style="height: 20px; background-color: white"></div>
@@ -61,10 +58,9 @@ export default {
         return {
             email: "",
             password: "",
-            emailError: false,
             passwordError: false,
             loginError: false,
-            emailFormatError: false,
+            emailError: false,
         };
     },
     methods: {
@@ -72,15 +68,14 @@ export default {
             this.emailError = false;
             this.passwordError = false;
             this.loginError = false;
-            this.emailFormatError = false;
-            this.emailFormatError = !validateEmail(this.email);
+            this.emailError = !validateEmail(this.email);
             if (!this.email) {
                 this.emailError = true;
             }
             if (!this.password) {
                 this.passwordError = true;
             }
-            if (!this.email || !this.password || this.emailFormatError) {
+            if (!this.email || !this.password || this.emailError) {
                 return;
             }
             const response = await this.submit();

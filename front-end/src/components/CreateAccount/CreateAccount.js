@@ -14,18 +14,20 @@ export default {
     },
     methods: {
         submit() {
-            axiosInstance
-                .post("/users", {
-                    name: this.name,
-                    email: this.email,
-                    password: this.password,
-                })
-                // .then((response) => {
-                //     // console.log(response.data);
-                // })
-                .catch((error) => {
-                    console.log(error);
-                });
+            return new Promise((resolve, reject) => {
+                axiosInstance
+                    .post("/users", {
+                        name: this.name,
+                        email: this.email,
+                        password: this.password,
+                    })
+                    .then((response) => {
+                        resolve(response);
+                    })
+                    .catch((error) => {
+                        reject(error.response);
+                    });
+            });
         },
     },
 };
