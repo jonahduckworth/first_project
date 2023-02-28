@@ -1,8 +1,10 @@
 @import "@/css/CommonStyles.css";
 
-.dashboard-container {
+.container {
     width: 81%;
-    height: 78%;
+    max-width: 81%;
+    min-height: 64%;
+    max-height: 81%;
     margin: 0 auto;
     padding: 30px;
     background-color: white;
@@ -13,4 +15,30 @@
     left: 50%;
     transform: translate(-50%, -50%);
     box-shadow: 15px 15px 0px 0px black;
+    overflow: scroll;
+}
+
+.container-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tile {
+    width: 150px;
+    height: 150px;
+    margin: 30px;
+    padding: 30px;
+    background-color: #ed215ec2;
+    border-radius: 0;
+    border: 1px solid black;
+    position: relative;
+    box-shadow: 15px 15px 0px 0px black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+p {
+    margin: 0;
 }
