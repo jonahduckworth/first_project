@@ -14,11 +14,6 @@
                             'is-invalid': emailError,
                         }"
                     />
-                    <div
-                        class="invalid-feedback"
-                        v-if="!emailError"
-                        style="height: 10px; background-color: white"
-                    ></div>
                     <div class="invalid-feedback" v-if="emailError">
                         Please enter a valid email address
                     </div>

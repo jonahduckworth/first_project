@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="login-container">
-            <div style="height: 13px; background-color: white"></div>
+            <div style="height: 15px; background-color: white"></div>
             <form>
                 <div class="form-group">
                     <label for="name">Name:</label>
@@ -12,11 +12,6 @@
                         class="form-control"
                         :class="{ 'is-invalid': nameError }"
                     />
-                    <div
-                        class="invalid-feedback"
-                        v-if="!nameError"
-                        style="height: 10px; background-color: white"
-                    ></div>
                     <div class="invalid-feedback" v-if="nameError">
                         Please enter your name
                     </div>
@@ -32,11 +27,6 @@
                             'is-invalid': emailError,
                         }"
                     />
-                    <div
-                        class="invalid-feedback"
-                        v-if="!emailError"
-                        style="height: 10px; background-color: white"
-                    ></div>
                     <div class="invalid-feedback" v-if="emailError">
                         Please enter a valid email address
                     </div>
