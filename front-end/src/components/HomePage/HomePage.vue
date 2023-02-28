@@ -40,8 +40,8 @@
 </style>
 
 <script>
-import LoginForm from "@/components/LoginPage/LoginPage.vue";
-import CreateAccountForm from "@/components/CreateAccount/CreateAccount.vue";
+import LoginForm from "./LoginPage/LoginPage.vue";
+import CreateAccountForm from "./CreateAccount/CreateAccount.vue";
 
 export default {
     components: {

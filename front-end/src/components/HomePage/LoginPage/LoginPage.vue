@@ -50,7 +50,7 @@
 
 <script>
 import login from "./Login.js";
-import { validateEmail } from "../../utils.js";
+import { validateEmail } from "@/utils.js";
 
 export default {
     mixins: [login],

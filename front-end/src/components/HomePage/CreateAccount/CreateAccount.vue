@@ -64,7 +64,7 @@
 
 <script>
 import createAccount from "./CreateAccount.js";
-import { validateEmail } from "../../utils.js";
+import { validateEmail } from "@/utils.js";
 
 export default {
     mixins: [createAccount],
