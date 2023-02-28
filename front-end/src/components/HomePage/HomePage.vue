@@ -7,10 +7,8 @@
         >
             &lt; Back
         </div>
-        <div class="home-container-shadow"></div>
-        <div class="home-container">
-            <div style="height: 15px; background-color: white"></div>
-            <div class="login-create-account">
+        <div class="login-container">
+            <div>
                 <button class="btn btn-primary" @click="showLoginForm = true">
                     Login
                 </button>
@@ -36,9 +34,11 @@
         </div>
     </div>
 </template>
+
 <style scoped>
-@import "./HomePage.css";
+@import "@/css/LoginPage.css";
 </style>
+
 <script>
 import LoginForm from "@/components/LoginPage/LoginPage.vue";
 import CreateAccountForm from "@/components/CreateAccount/CreateAccount.vue";

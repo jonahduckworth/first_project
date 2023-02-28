@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="login-container-shadow"></div>
-        <div class="login-form-container">
+        <div class="login-container">
             <div style="height: 15px; background-color: white"></div>
             <form>
                 <div class="form-group">
@@ -53,10 +52,6 @@
         </div>
     </div>
 </template>
-
-<style scoped>
-@import "./LoginPage.css";
-</style>
 
 <script>
 import login from "./Login.js";

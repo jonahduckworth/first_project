@@ -1,7 +1,6 @@
 <template>
     <div>
-        <div class="create-account-container-shadow"></div>
-        <div class="create-account-form-container">
+        <div class="login-container">
             <div style="height: 13px; background-color: white"></div>
             <form>
                 <div class="form-group">
@@ -72,9 +71,7 @@
         </div>
     </div>
 </template>
-<style scoped>
-@import "./CreateAccount.css";
-</style>
+
 <script>
 import createAccount from "./CreateAccount.js";
 import { validateEmail } from "../../utils.js";

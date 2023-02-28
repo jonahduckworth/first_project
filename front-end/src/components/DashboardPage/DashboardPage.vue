@@ -1,11 +1,13 @@
 <template>
     <div>
-        <h1>Welcome to the Dashboard</h1>
+        <div class="dashboard-container">
+            <h1>Welcome to the Dashboard</h1>
+        </div>
     </div>
 </template>
 
 <style scoped>
-@import "./DashboardPage.css";
+@import "@/css/DashboardPage.css";
 </style>
 
 <script>
