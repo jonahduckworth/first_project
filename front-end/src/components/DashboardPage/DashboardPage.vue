@@ -11,7 +11,7 @@
                 <div class="tile"></div>
                 <div class="tile"></div>
                 <div class="tile"></div>
-                <div class="tile">
+                <div class="tile" @click="signOut">
                     <p>Sign Out</p>
                 </div>
             </div>
@@ -25,5 +25,11 @@
 </style>
 
 <script>
-export default {};
+export default {
+    methods: {
+        signOut() {
+            this.$router.push({ path: "/" });
+        },
+    },
+};
 </script>
