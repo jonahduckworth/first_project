@@ -36,17 +36,18 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.3s ease-in-out;
+    box-shadow: 8px 8px 5px 0px black;
+    transition: all 0.2s ease-in-out;
 }
 
 .tile:hover {
-    transform: translate(-5px, -5px);
-    box-shadow: 10px 10px 10px 0px black;
+    transform: scale(1.03) translate(-2px, -2px);
+    box-shadow: 10px 10px 5px 0px black;
     cursor: pointer;
 }
 
 .tile:active {
-    transform: translate(0px, 0px);
+    transform: scale(0.97) translate(8px, 8px);
     box-shadow: 0px 0px 0px 0px black;
 }
 
