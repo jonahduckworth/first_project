@@ -22,12 +22,6 @@
 
 <style scoped>
 @import "@/css/DashboardPage.css";
-
-.container-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
 </style>
 
 <script>
