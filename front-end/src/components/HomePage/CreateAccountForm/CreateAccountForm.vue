@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="login-container">
+        <div class="home-container">
             <div style="height: 15px; background-color: white"></div>
             <form>
                 <div class="form-group">
