@@ -1,8 +1,8 @@
 <template>
-    <div>
+    <div v-if="!showProfileView">
         <div class="container">
             <div class="container-row">
-                <div class="tile">
+                <div class="tile" @click="showProfileView = true">
                     <p>Profile</p>
                 </div>
                 <div class="tile"></div>
@@ -18,14 +18,28 @@
             <div style="height: 15px; background-color: white"></div>
         </div>
     </div>
+    <ProfileView
+        v-if="showProfileView"
+        @update:showProfileView="showProfileView = false"
+        :name="name"
+        :email="email"
+    />
 </template>
 
-<style scoped>
-@import "@/css/DashboardPage.css";
-</style>
-
 <script>
+import ProfileView from "./ProfileView/ProfileView.vue";
+import GetProfile from "./ProfileView/GetProfile.js";
+
 export default {
+    mixins: [GetProfile],
+    components: {
+        ProfileView,
+    },
+    data() {
+        return {
+            showProfileView: false,
+        };
+    },
     methods: {
         signOut() {
             this.$router.push({ path: "/" });
@@ -33,3 +47,7 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+@import "@/css/DashboardPage.css";
+</style>
