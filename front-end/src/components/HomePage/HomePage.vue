@@ -36,12 +36,12 @@
 </template>
 
 <style scoped>
-@import "@/css/LoginPage.css";
+@import "@/css/HomePage.css";
 </style>
 
 <script>
-import LoginForm from "./LoginPage/LoginPage.vue";
-import CreateAccountForm from "./CreateAccount/CreateAccount.vue";
+import LoginForm from "./LoginForm/LoginForm.vue";
+import CreateAccountForm from "./CreateAccountForm/CreateAccountForm.vue";
 
 export default {
     components: {
