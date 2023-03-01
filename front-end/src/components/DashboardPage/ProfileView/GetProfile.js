@@ -13,8 +13,9 @@ export default {
     },
     methods: {
         async getProfile() {
+            const id = this.$store.state.id;
             try {
-                const response = await axiosInstance.get("/users/14");
+                const response = await axiosInstance.get(`/users/${id}`);
                 this.name = response.data.name;
                 this.email = response.data.email;
             } catch (error) {

@@ -47,7 +47,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import login from "./Login.js";
 import { validateEmail } from "@/utils.js";
@@ -80,6 +79,7 @@ export default {
             }
             const response = await this.submit();
             if (response.data.userExists) {
+                this.$store.dispatch("login", response.data.id);
                 this.$router.push({ path: "/dashboard" });
             } else {
                 this.loginError = true;
