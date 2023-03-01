@@ -3,6 +3,8 @@ package handler
 import (
 	"database/sql"
 	"net/http"
+	"regexp"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 
@@ -100,7 +102,7 @@ func Login(db *sql.DB) echo.HandlerFunc {
 	}
   }
 
-func UpdatePassword(db *sql.DB) echo.HandlerFunc {
+  func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		type Request struct {
 			Email    string `json:"email"`
@@ -115,6 +117,20 @@ func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 		email := req.Email
 		password := req.Password
 
+		// Check if the password meets the requirements
+		if len(password) < 8 {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Password must contain at least 8 characters"})
+		}
+		if !regexp.MustCompile(`[a-zA-Z]`).MatchString(password) {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Password must contain at least one letter"})
+		}
+		if !regexp.MustCompile(`\d`).MatchString(password) {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Password must contain at least one digit"})
+		}
+		if !regexp.MustCompile(`[!"#$%&'()*+,\-./]`).MatchString(password) {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Password must contain at least one of the following special characters: ! \" # $ % & ' ( ) * + , - . /"})
+		}
+
 		// Query the database to check if the user exists
 		var id int
 		err := db.QueryRow("SELECT id FROM users WHERE email = ?", email).Scan(&id)
@@ -126,7 +142,31 @@ func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to reset password"})
 		}
 
-		// If the user exists, change the password
+		// Query the database to get the list of previous passwords used by the user
+		var previousPasswords []string
+		rows, err := db.Query("SELECT password FROM passwords WHERE user_id = ?", id)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to reset password"})
+		}
+		defer rows.Close()
+		for rows.Next() {
+			var prevPassword string
+			if err := rows.Scan(&prevPassword); err != nil {
+				return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to reset password"})
+			}
+			previousPasswords = append(previousPasswords, prevPassword)
+		}
+		
+		// Check if the password contains a sequence of 4 consecutive characters that is also found in any of the previous passwords
+		for _, prevPassword := range previousPasswords {
+			for i := 0; i < len(password)-3; i++ {
+				if strings.Contains(prevPassword, password[i:i+4]) {
+					return c.JSON(http.StatusBadRequest, map[string]string{"error": "Password cannot contain a sequence of 4 consecutive characters that is also found in any of the previous passwords used by this user"})
+				}
+			}
+		}
+		
+		// If the password meets all requirements and the user exists, change the password
 		_, err = db.Exec("UPDATE users SET password = ? WHERE email = ?", password, email)
 		if err != nil {
 			return err
@@ -134,4 +174,4 @@ func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 			return c.JSON(http.StatusOK, map[string]bool{"passwordUpdated": true})
 		}
 	}
-}
+  }		
