@@ -1,16 +1,13 @@
 <template>
-    <div v-if="!showProfileView">
+    <div v-if="!showProfileView && !showStoreView">
         <div class="container">
             <div class="container-row">
                 <div class="tile" @click="showProfileView = true">
                     <p>Profile</p>
                 </div>
-                <div class="tile"></div>
-                <div class="tile"></div>
-                <div class="tile"></div>
-                <div class="tile"></div>
-                <div class="tile"></div>
-                <div class="tile"></div>
+                <div class="tile" @click="showStoreView = true">
+                    <p>Store</p>
+                </div>
                 <div class="tile" @click="signOut">
                     <p>Sign Out</p>
                 </div>
@@ -24,20 +21,26 @@
         :name="name"
         :email="email"
     />
+    <StoreView
+        v-if="showStoreView"
+        @update:showStoreView="showStoreView = false"
+    />
 </template>
-
 <script>
 import ProfileView from "./ProfileView/ProfileView.vue";
+import StoreView from "./StoreView/StoreView.vue";
 import GetProfile from "./ProfileView/GetProfile.js";
 
 export default {
     mixins: [GetProfile],
     components: {
         ProfileView,
+        StoreView,
     },
     data() {
         return {
             showProfileView: false,
+            showStoreView: false,
         };
     },
     methods: {
@@ -47,7 +50,6 @@ export default {
     },
 };
 </script>
-
 <style scoped>
 @import "@/css/DashboardPage.css";
 </style>
