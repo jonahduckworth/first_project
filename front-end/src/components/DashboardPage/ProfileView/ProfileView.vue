@@ -6,18 +6,22 @@
             <div class="profile-info">
                 <p>Name: {{ name }}</p>
                 <p>Email: {{ email }}</p>
-            </div>
-            <button @click="showUpdatePasswordModal = true">
-                Update Password
-            </button>
-            <div v-if="showUpdatePasswordModal">
-                <form @submit.prevent="updatePassword">
-                    <input
-                        type="password"
-                        v-model="password"
-                        placeholder="New Password"
-                    />
-                    <button type="submit">Update</button>
+                <div class="password-container" v-if="!editingPassword">
+                    <p>
+                        Password: ********
+                        <button @click="editingPassword = true">Edit</button>
+                    </p>
+                </div>
+                <form v-if="editingPassword" @submit.prevent="updatePassword">
+                    <p>
+                        Password:
+                        <input
+                            type="text"
+                            v-model="password"
+                            placeholder="New Password"
+                        />
+                        <button type="submit">Save</button>
+                    </p>
                 </form>
             </div>
         </div>
@@ -37,7 +41,7 @@ export default {
     data() {
         return {
             password: "",
-            showUpdatePasswordModal: false,
+            editingPassword: false,
         };
     },
     methods: {
@@ -51,7 +55,7 @@ export default {
                     password: this.password,
                 });
                 if (response.data.passwordUpdated) {
-                    this.showUpdatePasswordModal = false;
+                    this.editingPassword = false;
                     this.password = "";
                 } else {
                     console.error("Failed to update password");
