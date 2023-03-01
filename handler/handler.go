@@ -12,26 +12,32 @@ import (
 )
 
 func CreateUser(db *sql.DB) echo.HandlerFunc {
-  return func(c echo.Context) error {
-    u := new(model.User)
-    if err := c.Bind(u); err != nil {
-      return err
-    }
-
-    result, err := db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", u.Name, u.Email, u.Password)
-    if err != nil {
-      return err
-    }
-
-    id, err := result.LastInsertId()
-    if err != nil {
-      return err
-    }
-
-    u.ID = int(id)
-	return c.JSON(http.StatusOK, map[string]bool{"userCreated": true})
+	return func(c echo.Context) error {
+	  u := new(model.User)
+	  if err := c.Bind(u); err != nil {
+		return err
+	  }
+  
+	  result, err := db.Exec("INSERT INTO users (name, email, password) VALUES (?, ?, ?)", u.Name, u.Email, u.Password)
+	  if err != nil {
+		return err
+	  }
+  
+	  id, err := result.LastInsertId()
+	  if err != nil {
+		return err
+	  }
+  
+	  _, err = db.Exec("INSERT INTO passwords (user_id, password) VALUES (?, ?)", id, u.Password)
+	  if err != nil {
+		return err
+	  }
+  
+	  u.ID = int(id)
+	  return c.JSON(http.StatusOK, map[string]bool{"userCreated": true})
+	}
   }
-}
+  
 
 func GetUser(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -102,7 +108,7 @@ func Login(db *sql.DB) echo.HandlerFunc {
 	}
   }
 
-  func UpdatePassword(db *sql.DB) echo.HandlerFunc {
+func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		type Request struct {
 			Email    string `json:"email"`
@@ -166,12 +172,16 @@ func Login(db *sql.DB) echo.HandlerFunc {
 			}
 		}
 		
-		// If the password meets all requirements and the user exists, change the password
 		_, err = db.Exec("UPDATE users SET password = ? WHERE email = ?", password, email)
 		if err != nil {
 			return err
-		} else {
-			return c.JSON(http.StatusOK, map[string]bool{"passwordUpdated": true})
 		}
+
+		_, err = db.Exec("INSERT INTO passwords (user_id, password) VALUES (?, ?)", id, password)
+		if err != nil {
+			return err
+		}
+
+		return c.JSON(http.StatusOK, map[string]bool{"passwordUpdated": true})
 	}
-  }		
+}		
