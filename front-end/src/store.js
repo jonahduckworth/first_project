@@ -9,13 +9,11 @@ const store = createStore({
     mutations: {
         setUser(state, id) {
             state.id = id;
-            console.log(state.id);
         },
     },
     actions: {
         login({ commit }, user) {
             commit("setUser", user);
-            console.log("Logged in");
         },
     },
 });
