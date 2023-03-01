@@ -22,6 +22,9 @@
                         />
                         <button type="submit">Save</button>
                     </p>
+                    <div class="invalid-feedback" v-if="errorMessage">
+                        {{ errorMessage }}
+                    </div>
                 </form>
             </div>
         </div>
@@ -42,6 +45,7 @@ export default {
         return {
             password: "",
             editingPassword: false,
+            errorMessage: "",
         };
     },
     methods: {
@@ -49,6 +53,7 @@ export default {
             this.$emit("update:showProfileView", false);
         },
         async updatePassword() {
+            this.errorMessage = "";
             try {
                 const response = await axiosInstance.put(`/updatePassword`, {
                     email: this.email,
@@ -58,10 +63,11 @@ export default {
                     this.editingPassword = false;
                     this.password = "";
                 } else {
-                    console.error("Failed to update password");
+                    this.errorMessage = "Failed to update password";
                 }
             } catch (error) {
                 console.error(error);
+                this.errorMessage = error.response.data.error;
             }
         },
     },
