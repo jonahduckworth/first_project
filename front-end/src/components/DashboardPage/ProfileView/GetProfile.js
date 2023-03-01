@@ -14,7 +14,7 @@ export default {
     methods: {
         async getProfile() {
             try {
-                const response = await axiosInstance.get("/profile");
+                const response = await axiosInstance.get("/users/14");
                 this.name = response.data.name;
                 this.email = response.data.email;
             } catch (error) {
