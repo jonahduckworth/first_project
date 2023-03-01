@@ -35,7 +35,7 @@ func GetUser(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
 		id := c.Param("id")
 		var u model.User
-		err := db.QueryRow("SELECT * FROM users WHERE id = ?", id).Scan(&u.ID, &u.Name, &u.Email)
+		err := db.QueryRow("SELECT id, name, email FROM users WHERE id = ?", id).Scan(&u.ID, &u.Name, &u.Email)
 		if err != nil {
 			return err
 		}
@@ -95,8 +95,8 @@ func Login(db *sql.DB) echo.HandlerFunc {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": "An error occurred while trying to log in"})
 	  }
   
-	  // If the user exists, return success with the user's id
-	  return c.JSON(http.StatusOK, map[string]bool{"userExists": true})
+	  // If the user exists, return userExists as true and the user's id
+	  return c.JSON(http.StatusOK, map[string]interface{}{"userExists": true, "id": id})
 	}
   }
 
