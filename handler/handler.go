@@ -1,10 +1,15 @@
 package handler
 
 import (
+	"context"
 	"database/sql"
+	"fmt"
+	"io"
 	"net/http"
 	"regexp"
 	"strings"
+
+	"cloud.google.com/go/storage"
 
 	"github.com/labstack/echo/v4"
 
@@ -184,4 +189,43 @@ func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 
 		return c.JSON(http.StatusOK, map[string]bool{"passwordUpdated": true})
 	}
-}		
+}
+
+func storeImageInGCS(image io.Reader, objectName string) error {
+	ctx := context.Background()
+	client, err := storage.NewClient(ctx)
+	if err != nil {
+		return fmt.Errorf("failed to create client: %v", err)
+	}
+	defer client.Close()
+
+	bucketName := "my-bucket"
+	bucket := client.Bucket(bucketName)
+
+	object := bucket.Object(objectName)
+	w := object.NewWriter(ctx)
+	if _, err := io.Copy(w, image); err != nil {
+		return fmt.Errorf("failed to store image: %v", err)
+	}
+	if err := w.Close(); err != nil {
+		return fmt.Errorf("failed to close writer: %v", err)
+	}
+
+	return nil
+}
+
+func handleImageUpload(w http.ResponseWriter, r *http.Request) {
+	image, header, err := r.FormFile("image")
+	if err != nil {
+		http.Error(w, "failed to get image from request", http.StatusBadRequest)
+		return
+	}
+	defer image.Close()
+
+	if err := storeImageInGCS(image, header.Filename); err != nil {
+		http.Error(w, "failed to store image", http.StatusInternalServerError)
+		return
+	}
+
+	w.Write([]byte("Image uploaded successfully"))
+}
