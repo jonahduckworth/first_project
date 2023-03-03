@@ -1,5 +1,5 @@
 <template>
-    <div class="home-container">
+    <div class="main-container">
         <form @submit.prevent="submitForm">
             <div class="form-group">
                 <label for="image">Image:</label>

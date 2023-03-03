@@ -17,21 +17,6 @@
     overflow: scroll;
 }
 
-.profile-container {
-    width: 365px;
-    height: auto;
-    margin: 0 auto;
-    padding: 30px;
-    background-color: white;
-    border-radius: 0;
-    border: 1px solid black;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    box-shadow: 15px 15px 0px 0px black;
-}
-
 .container-row {
     display: flex;
     flex-wrap: wrap;
@@ -44,7 +29,6 @@
     margin: 10px;
     padding: 15px;
     background-color: #ea4274c2;
-    /* background-color: white; */
     border-radius: 0;
     border: 1px solid black;
     position: relative;

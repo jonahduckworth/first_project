@@ -7,7 +7,7 @@
         >
             &lt; Back
         </div>
-        <div class="home-container">
+        <div class="main-container">
             <div>
                 <button class="btn btn-primary" @click="showLoginForm = true">
                     Login
