@@ -36,7 +36,7 @@
 </template>
 
 <style scoped>
-@import "@/css/HomePage.css";
+@import "@/css/CommonStyles.css";
 </style>
 
 <script>

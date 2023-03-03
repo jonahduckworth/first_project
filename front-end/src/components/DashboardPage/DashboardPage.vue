@@ -68,7 +68,7 @@ export default {
     },
     data() {
         return {
-            showProfileView: false,
+            showProfileView: true,
             showStoreView: false,
             showAddItemView: false,
         };
