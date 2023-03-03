@@ -1,27 +1,35 @@
 <template>
     <div class="main-container">
-        <div class="container-row">
-            <div class="tile">
-                <p>Tile 1</p>
-            </div>
-            <div class="tile">
-                <p>Tile 2</p>
-            </div>
-            <div class="tile">
-                <p>Tile 3</p>
-            </div>
+        <div v-for="item in items" :key="item.ID">
+            <p>{{ item.Title }}</p>
+            <p>{{ item.Price }}</p>
+            <img :src="item.ImageUrl" />
         </div>
-        <div style="height: 15px; background-color: white"></div>
     </div>
 </template>
 
 <script>
+import { getItems } from "./GetItems";
+
 export default {
     data() {
         return {
-            showStoreView: true,
+            items: [],
         };
     },
-    methods: {},
+    mounted() {
+        this.getItems();
+    },
+    methods: {
+        async getItems() {
+            try {
+                const items = await getItems();
+                this.items = items;
+                console.log(items);
+            } catch (error) {
+                console.error(error);
+            }
+        },
+    },
 };
 </script>
