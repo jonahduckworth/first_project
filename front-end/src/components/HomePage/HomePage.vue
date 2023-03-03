@@ -1,5 +1,5 @@
 <template>
-    <div class="container">
+    <div class="navigation-bar">
         <div class="container-row">
             <div
                 class="tile"
@@ -82,5 +82,5 @@ export default {
 </script>
 
 <style scoped>
-@import "@/css/DashboardPage.css";
+@import "@/css/NavigationBar.css";
 </style>

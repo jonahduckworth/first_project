@@ -3,11 +3,11 @@ import App from "./App.vue";
 import store from "./store.js";
 import { createRouter, createWebHashHistory } from "vue-router";
 import LoginPage from "./components/LoginPage/LoginPage.vue";
-import DashboardPage from "./components/DashboardPage/DashboardPage.vue";
+import HomePage from "./components/HomePage/HomePage.vue";
 
 const routes = [
     { path: "/", component: LoginPage },
-    { path: "/dashboard", component: DashboardPage },
+    { path: "/dashboard", component: HomePage },
 ];
 
 const router = createRouter({

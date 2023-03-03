@@ -25,7 +25,3 @@ export default {
     methods: {},
 };
 </script>
-
-<style scoped>
-@import "@/css/DashboardPage.css";
-</style>
