@@ -1,22 +1,41 @@
 <template>
-    <div v-if="!showProfileView && !showStoreView && !showAddItemView">
-        <div class="container">
-            <div class="container-row">
-                <div class="tile" @click="showProfileView = true">
-                    <p>Profile</p>
-                </div>
-                <div class="tile" @click="showStoreView = true">
-                    <p>Store</p>
-                </div>
-                <div class="tile" @click="showAddItemView = true">
-                    <p>Add Item</p>
-                </div>
-                <div class="tile" @click="signOut">
-                    <p>Sign Out</p>
-                </div>
+    <div class="container">
+        <div class="container-row">
+            <div
+                class="tile"
+                @click="
+                    showProfileView = true;
+                    showStoreView = false;
+                    showAddItemView = false;
+                "
+            >
+                <p>Profile</p>
             </div>
-            <div style="height: 15px; background-color: white"></div>
+            <div
+                class="tile"
+                @click="
+                    showStoreView = true;
+                    showProfileView = false;
+                    showAddItemView = false;
+                "
+            >
+                <p>Store</p>
+            </div>
+            <div
+                class="tile"
+                @click="
+                    showAddItemView = true;
+                    showProfileView = false;
+                    showStoreView = false;
+                "
+            >
+                <p>Add Item</p>
+            </div>
+            <div class="tile" @click="signOut">
+                <p>Sign Out</p>
+            </div>
         </div>
+        <div style="height: 10px; background-color: white"></div>
     </div>
     <ProfileView
         v-if="showProfileView"

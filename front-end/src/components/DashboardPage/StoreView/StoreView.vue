@@ -1,6 +1,5 @@
 <template>
-    <div class="back-button" @click="goBack">&lt; Back</div>
-    <div class="container">
+    <div class="home-container">
         <div class="container-row">
             <div class="tile">
                 <p>Tile 1</p>
@@ -23,11 +22,7 @@ export default {
             showStoreView: true,
         };
     },
-    methods: {
-        goBack() {
-            this.$emit("update:showStoreView", false);
-        },
-    },
+    methods: {},
 };
 </script>
 
