@@ -1,4 +1,5 @@
 <template>
+    <div class="back-button" @click="goBack">&lt; Back</div>
     <div class="home-container">
         <h1>Add Item</h1>
         <form @submit.prevent="submitForm">
@@ -22,6 +23,7 @@
 </template>
 
 <script>
+import { submit } from "./AddItem.js";
 export default {
     data() {
         return {
@@ -31,14 +33,18 @@ export default {
         };
     },
     methods: {
+        goBack() {
+            this.$emit("update:showAddItemView", false);
+        },
         uploadImage(event) {
             this.image = event.target.files[0];
         },
-        submitForm() {
-            // Add code to handle the submission of the form data, such as sending it to a server or storing it locally
-            console.log("Title:", this.title);
-            console.log("Price:", this.price);
-            console.log("Image:", this.image);
+        async submitForm() {
+            try {
+                await submit(this.title, this.price, this.image);
+            } catch (error) {
+                console.error(error);
+            }
         },
     },
 };

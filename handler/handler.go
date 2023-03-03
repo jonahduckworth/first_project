@@ -7,6 +7,7 @@ import (
 	"io"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 
 	"cloud.google.com/go/storage"
@@ -15,6 +16,19 @@ import (
 
 	"first_project/model"
 )
+
+const (
+	bucketName = "jonahs-junk-bucket"
+	objectName = "images/%s.jpg"
+)
+
+type Item struct {
+	ID          int       `db:"id"`
+	Title       string    `db:"title"`
+	Price       int       `db:"price"`
+	Quantity    int       `db:"quantity"`
+	ImageUrl    string    `db:"image_url"`
+}
 
 func CreateUser(db *sql.DB) echo.HandlerFunc {
 	return func(c echo.Context) error {
@@ -191,41 +205,75 @@ func UpdatePassword(db *sql.DB) echo.HandlerFunc {
 	}
 }
 
-func storeImageInGCS(image io.Reader, objectName string) error {
+func addImageToBucket(bucketName, objectName string, data io.Reader) (string, error) {
 	ctx := context.Background()
 	client, err := storage.NewClient(ctx)
 	if err != nil {
-		return fmt.Errorf("failed to create client: %v", err)
+		return "", fmt.Errorf("failed to create client: %v", err)
 	}
 	defer client.Close()
-
-	bucketName := "my-bucket"
+	
 	bucket := client.Bucket(bucketName)
-
 	object := bucket.Object(objectName)
 	w := object.NewWriter(ctx)
-	if _, err := io.Copy(w, image); err != nil {
-		return fmt.Errorf("failed to store image: %v", err)
+	if _, err := io.Copy(w, data); err != nil {
+		return "", fmt.Errorf("failed to store object: %v", err)
 	}
 	if err := w.Close(); err != nil {
-		return fmt.Errorf("failed to close writer: %v", err)
+		return "", fmt.Errorf("failed to close writer: %v", err)
+	}
+	
+	url := fmt.Sprintf("https://storage.googleapis.com/%s/%s", bucketName, objectName)
+	
+	return url, nil
+}
+
+func addItem(db *sql.DB, title string, price, quantity int, image io.Reader) error {
+	imageUrl, err := addImageToBucket(bucketName, fmt.Sprintf(objectName, title), image)
+	if err != nil {
+		return err
+	}
+
+	query := "INSERT INTO items (title, price, quantity, image_url) VALUES (?, ?, ?, ?)"
+	_, err = db.Exec(query, title, price, quantity, imageUrl)
+
+	if err != nil {
+		return err
 	}
 
 	return nil
 }
 
-func handleImageUpload(w http.ResponseWriter, r *http.Request) {
-	image, header, err := r.FormFile("image")
-	if err != nil {
-		http.Error(w, "failed to get image from request", http.StatusBadRequest)
-		return
-	}
-	defer image.Close()
 
-	if err := storeImageInGCS(image, header.Filename); err != nil {
-		http.Error(w, "failed to store image", http.StatusInternalServerError)
-		return
-	}
+func AddItem(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		// Get the image file from the request
+		file, err := c.FormFile("image")
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Failed to get image from the request"})
+		}
+		src, err := file.Open()
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Failed to open the image file"})
+		}
+		defer src.Close()
 
-	w.Write([]byte("Image uploaded successfully"))
+		// Get the other item data from the request
+		title := c.FormValue("title")
+		price, err := strconv.Atoi(c.FormValue("price"))
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Failed to parse the price value"})
+		}
+		quantity, err := strconv.Atoi(c.FormValue("quantity"))
+		if err != nil {
+			return c.JSON(http.StatusBadRequest, map[string]string{"error": "Failed to parse the quantity value"})
+		}
+
+		// Add the item to the database and store the image in Google Cloud Storage
+		if err := addItem(db, title, price, quantity, src); err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to add item to the database"})
+		}
+
+		return c.JSON(http.StatusOK, map[string]bool{"itemAdded": true})
+	}
 }

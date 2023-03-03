@@ -22,6 +22,7 @@ func StartServer(db *sql.DB) error {
 	e.DELETE("/users/:id", handler.DeleteUser(db))
 	e.POST("/login", handler.Login(db))
 	e.PUT("/updatePassword", handler.UpdatePassword(db))
+	e.POST("/addItem", handler.AddItem(db))
 
 	return e.Start(":8081")
 }

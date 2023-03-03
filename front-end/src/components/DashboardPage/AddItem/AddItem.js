@@ -13,7 +13,7 @@ export function submit(title, price, image) {
 
     return new Promise((resolve, reject) => {
         axiosInstance
-            .post("/items", formData)
+            .post("/addItem", formData)
             .then((response) => {
                 resolve(response);
             })
