@@ -23,6 +23,7 @@ func StartServer(db *sql.DB) error {
 	e.POST("/login", handler.Login(db))
 	e.PUT("/updatePassword", handler.UpdatePassword(db))
 	e.POST("/addItem", handler.AddItem(db))
+	e.GET("/items", handler.GetItems(db))
 
 	return e.Start(":8081")
 }

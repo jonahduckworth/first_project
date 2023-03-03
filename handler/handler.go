@@ -277,3 +277,31 @@ func AddItem(db *sql.DB) echo.HandlerFunc {
 		return c.JSON(http.StatusOK, map[string]bool{"itemAdded": true})
 	}
 }
+
+func GetItems(db *sql.DB) echo.HandlerFunc {
+	return func(c echo.Context) error {
+		items, err := retrieveItemsFromDB(db)
+		if err != nil {
+			return c.JSON(http.StatusInternalServerError, map[string]string{"error": "Failed to retrieve items from the database"})
+		}
+		return c.JSON(http.StatusOK, items)
+	}
+}
+
+func retrieveItemsFromDB(db *sql.DB) ([]Item, error) {
+	rows, err := db.Query("SELECT * FROM items")
+		if err != nil {
+			return nil, err
+		}
+		defer rows.Close()
+		items := []Item{}
+		for rows.Next() {
+			item := Item{}
+			if err := rows.Scan(&item.ID, &item.Title, &item.Price, &item.Quantity, &item.ImageUrl); err != nil {
+				return nil, err
+			}
+			items = append(items, item)
+		}
+
+	return items, nil
+}
