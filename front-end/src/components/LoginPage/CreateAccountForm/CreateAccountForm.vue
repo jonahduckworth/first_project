@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="home-container">
+        <div class="main-container">
             <div style="height: 15px; background-color: white"></div>
             <form>
                 <div class="form-group">

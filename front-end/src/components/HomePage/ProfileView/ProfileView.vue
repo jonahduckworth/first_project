@@ -1,8 +1,6 @@
 <template>
     <div>
-        <div class="back-button" @click="goBack">&lt; Back</div>
-        <div class="profile-container">
-            <h3>Profile</h3>
+        <div class="main-container">
             <div class="profile-info">
                 <p>Name: {{ name }}</p>
                 <p>Email: {{ email }}</p>
@@ -49,9 +47,6 @@ export default {
         };
     },
     methods: {
-        goBack() {
-            this.$emit("update:showProfileView", false);
-        },
         async updatePassword() {
             this.errorMessage = "";
             try {

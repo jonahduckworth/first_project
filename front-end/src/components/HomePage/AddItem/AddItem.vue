@@ -1,7 +1,5 @@
 <template>
-    <div class="back-button" @click="goBack">&lt; Back</div>
-    <div class="home-container">
-        <h1>Add Item</h1>
+    <div class="main-container">
         <form @submit.prevent="submitForm">
             <div class="form-group">
                 <label for="image">Image:</label>
@@ -33,9 +31,6 @@ export default {
         };
     },
     methods: {
-        goBack() {
-            this.$emit("update:showAddItemView", false);
-        },
         uploadImage(event) {
             this.image = event.target.files[0];
         },
